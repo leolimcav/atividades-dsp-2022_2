@@ -26,7 +26,7 @@ import lombok.ToString;
 @Entity
 @Table(name = "movies")
 // Named Query
-@NamedQuery(name = "findAllByTitle", query = "SELECT * FROM movies m WHERE m.title LIKE '%?title%'")
+@NamedQuery(name = "findAllByTitle", query = "SELECT m FROM Movie m WHERE m.title = ?1")
 public class Movie {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
