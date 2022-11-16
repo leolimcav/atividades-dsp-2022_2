@@ -15,16 +15,22 @@ public class MovieDao {
   @Autowired
   EntityManager em;
 
+  // f) Listar os nomes de atores nascidos em determinado ano. -- CRITERIA QUERY
   public List<Movie> findAllByYear(Integer year) {
     var cb = em.getCriteriaBuilder();
     var cq = cb.createQuery(Movie.class);
 
     var movies = cq.from(Movie.class);
-    var yearPredicate = cb.like(movies.get("year"), "%" + year + "%");
+    var yearPredicate = cb.equal(movies.get("releaseYear"), year);
 
     cq.where(yearPredicate);
 
     var query = em.createQuery(cq);
     return query.getResultList();
+  }
+
+  // Named Query
+  public List<Movie> findAllByReleaseYearBetween(Integer startYear, Integer endYear) {
+    return em.createNamedQuery("findAllByReleaseYearBetween", Movie.class).setParameter("startYear", startYear).setParameter("endYear", endYear).getResultList();
   }
 }

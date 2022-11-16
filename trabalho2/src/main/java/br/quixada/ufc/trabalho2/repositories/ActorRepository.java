@@ -17,7 +17,7 @@ public interface ActorRepository extends CrudRepository<Actor, Integer> {
 
   Optional<Actor> findByName(String name);
 
-  List<Actor> findAllByNameLike(String name);
+  List<Actor> findAllByNameContains(String name);
 
   // b) Listar todos os títulos de filmes de um determinado ator.
   @Query(value = "SELECT m.title FROM actors a, movies m, movie_actor ma WHERE ma.movie_id = m.id AND ma.actor_id = a.id AND a.id = :id", nativeQuery = true)

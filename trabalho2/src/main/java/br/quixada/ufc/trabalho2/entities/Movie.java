@@ -16,17 +16,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Getter
 @Setter
 @Entity
 @Table(name = "movies")
 // Named Query
-@NamedQuery(name = "findAllByTitle", query = "SELECT m FROM Movie m WHERE m.title = ?1")
+@NamedQuery(name = "findAllByReleaseYearBetween", query = "SELECT m FROM Movie m WHERE m.releaseYear BETWEEN :startYear AND :endYear")
 public class Movie {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,4 +34,9 @@ public class Movie {
 
   @ManyToMany(mappedBy = "movies", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
   private List<Actor> actors;
+
+  @Override
+  public String toString() {
+    return "{" + "id:"+ this.id + " title:"+ this.title + " releaseYear:"+ this.releaseYear + "}";
+  }
 }
